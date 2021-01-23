@@ -1,0 +1,19 @@
+= rabbitamr_description
+
+_Robot's urdf design_
+
+_Executable commands :_
+
+[source, bash] 
+----
+roslaunch rabbitamr_description description.launch
+----
+
+[source, xml]
+----
+include::launch/description.launch[]
+----
+<1> Loads Robot URDF file as ros param
+
+*The robot can be displayed by opening RViz*
+

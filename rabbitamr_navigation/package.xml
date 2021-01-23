@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>rabbitamr_navigation</name>
+  <version>0.1.0</version>
+  <description>The rabbitamr_navigation package</description>
+
+  <maintainer email="shen.i@live.com">Sheni Hamitaj</maintainer>
+  <author email="shen.i@live.com">Sheni Hamitaj</author>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <export>
+
+  </export>
+</package>

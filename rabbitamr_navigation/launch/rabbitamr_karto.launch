@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <arg name="scan_topic" default="/sick_safetyscanners/scan"/>
+    <arg name="odom_topic" default="/odom"/>
+
+    <node pkg="slam_karto" type="slam_karto" name="slam_karto">
+        <remap from="scan" to="$(arg scan_topic)"/>
+        <remap from="odom" to="$(arg odom_topic)"/>
+        <rosparam file="$(find rabbitamr_navigation)/config/slam_karto.yaml" command="load"/>
+    </node>
+
+    <!--- Run Rviz -->
+<!--    <include file="$(find rabbitamr_viz)/launch/rabbitamr_mapping.launch" />-->
+
+</launch>

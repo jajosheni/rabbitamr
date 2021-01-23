@@ -1,0 +1,72 @@
+= rabbitamr_control
+
+_Creates a rosbridge connection and starts simulation with diffDrive_
+
+_Executable commands :_
+
+[source, bash]
+----
+roslaunch rabbitamr_control spawn.launch
+roslaunch rabbitamr_control teleop.launch
+roslaunch rabbitamr_control rosbridge.launch
+----
+
+- Used nodes:
+* rosbridge_websocket
+* gazebo
+* gazebo_ros_control
+* teleop_twist_keyboard
+
+== rosbridge_websocket
+
+_By starting rosbridge, we can control the entire ros system from a single websocket._
+
+== gazebo
+
+_Run the robot in a virtual environment_
+
+== gazebo_ros_control
+
+_Odom information is obtained from gazebo and cmd_vel commands are published at the same time_
+
+== teleop_twist_keyboard
+
+_Publishes commands in cmd_vel to control robot via keyboard_
+
+
+== Description of the Launch File :
+
+=== spawn.launch
+
+_spawn.launch:_
+
+[source, xml]
+----
+include::launch/spawn.launch[]
+----
+<1> Adds the robot in a virtual environment
+<2> Runs Gazebo ROS Control node
+<3> Starts Ekf sensor fusion
+<4> Starts Ros bridge
+
+
+=== teleop.launch
+
+_teleop.launch:_
+
+[source, xml]
+----
+include::launch/teleop.launch[]
+----
+<1> Runs the teleop twist package and publishes to `rabbitamr_diff_drive_controller/cmd_vel` topic
+
+== CONFIG FILES
+
+- *link:config/control.yaml[control.yaml]*
+* _diff_drive_controller config params_
+* params link: http://wiki.ros.org/diff_drive_controller
+
+
+- *link:config/localization.yaml[localization.yaml]*
+* _sensor fusion ekf config params_
+* params link: http://docs.ros.org/melodic/api/robot_localization/html/configuring_robot_localization.html

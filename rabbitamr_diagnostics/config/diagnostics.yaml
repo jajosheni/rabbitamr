@@ -1,0 +1,15 @@
+pub_rate: 1.0 
+
+analyzers:
+  sensors:
+    type: diagnostic_aggregator/AnalyzerGroup
+    path: Sensors
+    analyzers:
+      imu:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: D435iIMU
+        find_and_remove_prefix: 'IMU Sensor'
+      lidar:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: SICKLIDAR
+        find_and_remove_prefix: 'Lidar Sensor'

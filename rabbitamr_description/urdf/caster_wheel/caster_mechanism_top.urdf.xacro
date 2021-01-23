@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="caster_mechanism_top">
+    <xacro:property name="cmt_scale" value="0.13"/>
+    <xacro:macro name="caster_mechanism_top" params="prefix reflect reflect_x">
+        <link name="${prefix}_mechanism_top">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://rabbitamr_description/meshes/caster_wheel/mechanism_top.stl" scale="${cmt_scale} ${cmt_scale} ${cmt_scale}"/>
+                </geometry>
+                <material name="white"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://rabbitamr_description/meshes/caster_wheel/mechanism_top.stl" scale="${cmt_scale} ${cmt_scale} ${cmt_scale}"/>
+                </geometry>
+            </collision>
+            <xacro:cylinder_inertia m="1" r="0.03" h="0.04"/>
+        </link>
+
+        <joint name="${prefix}_mechanism_top_joint" type="continuous">
+            <axis xyz="0 0 1" rpy="0 0 0"/>
+            <parent link="${prefix}_top_flat"/>
+            <child link="${prefix}_mechanism_top"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </joint>
+    </xacro:macro>
+</robot>

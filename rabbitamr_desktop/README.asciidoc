@@ -1,0 +1,11 @@
+= rabbitamr_desktop
+
+_Connect with Rosbridge and launch the website server, this way it's possible to connect with the robot from any device._
+
+_Executable commands :_
+
+[source, bash]
+----
+cd WebApp && npm start
+----
+

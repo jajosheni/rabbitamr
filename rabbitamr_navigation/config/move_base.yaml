@@ -1,0 +1,18 @@
+#move base params
+controller_frequency: 10.0
+recovery_behaviour_enabled: true
+planner_frequency: 0.25 #hz
+planner_patience: 5.0
+controller_patience: 15.0
+conservative_reset_dist: 3.0
+recovery_behavior_enabled: true
+clearing_rotation_allowed: true
+recovery_behaviors: [
+  {name: conservative_reset, type: clear_costmap_recovery/ClearCostmapRecovery},
+  {name: aggressive_reset, type: clear_costmap_recovery/ClearCostmapRecovery}
+]
+shutdown_costmaps: false
+oscillation_timeout: 0.0
+oscillation_distance: 0.2
+
+#footprint: [[-1, -1], [-1, 1], [1, 1], [1, -1]]

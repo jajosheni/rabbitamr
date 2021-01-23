@@ -1,0 +1,30 @@
+
+= Mapping types:
+
+== Gmapping
+* It unnecessarily increases the size of the map
+* odom is more important
+* can correct itself
+* Can erase obstacles that were there before
+* performance: good
+
+== Karto
+* Keeps the size of the map pretty small
+* Laser data is more important
+* it gets lost harder but when it does it destroys the map
+* hardly erases obstacles that were before
+* When the amcl runs it creates 1m offset according to x (wrongly saves the origin)
+* performance : medium
+
+== Hector
+* It produces the map size in a fixed way, if it surpasses the real world it does not record anything.
+* Uses laser data and odom at the same level of importance
+* The position of the robot is constantly changing in Rviz, vibrating
+* performance: medium
+
+== Cartographer
+* The map size is pretty small
+* Adds obstacles very confidently, but erases the edges of some small objects
+* Can use imu as well as laser scan and odom
+* performance: good
+

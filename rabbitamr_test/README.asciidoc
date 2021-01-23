@@ -1,0 +1,6 @@
+= rabbitamr_test
+
+_temporary different test packages_
+
+== Mapping tests:
+- *link:mapping/README.asciidoc[]*

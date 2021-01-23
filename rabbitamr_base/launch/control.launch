@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+    <node name="rabbitamr" pkg="rabbitamr_base" type="rabbitamr_hardware_interface" respawn="false"
+          output="screen" required="true"/>  <!--1-->
+
+    <rosparam file="$(find rabbitamr_base)/config/control.yaml" command="load"/> <!--2-->
+
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+          output="screen" args="rabbitamr_joint_state_controller rabbitamr_diff_drive_controller" required="true"/> <!--3-->
+
+    <node name="modbus_con" pkg="rabbitamr_base" type="modbus_con" respawn="false"
+          output="screen" required="true"/> <!--4-->
+
+    <!-- Start EKF for localization -->
+<!--    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">-->
+<!--        <rosparam command="load" file="$(find rabbitamr_base)/config/localization.yaml" />-->
+<!--        <remap from="/odometry/filtered" to="odom"/> &lt;!&ndash;5&ndash;&gt;-->
+<!--    </node>-->
+
+</launch>

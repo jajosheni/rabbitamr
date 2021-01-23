@@ -1,0 +1,18 @@
+local_costmap:
+  rolling_window: true
+  global_frame: map # errors disappear on frame set as map (test)
+  width: 6
+  height: 6
+
+  footprint: [[-0.79, -0.25], [-0.83, 0.0], [-0.79, 0.25], [-0.7, 0.35], [0.7, 0.35],
+              [0.79, 0.25], [0.83, 0.0], [0.79, -0.25], [0.7, -0.35], [-0.7, -0.35]]
+  footprint_padding: 0.01 # 1 cm padding for the footprint
+
+  inflation_layer:
+    inflation_radius: 0.10
+    cost_scaling_factor: 1.0
+
+
+  plugins:
+    - {name: obstacles_layer, type: "costmap_2d::ObstacleLayer"}
+    - {name: inflation_layer, type: "costmap_2d::InflationLayer"}

@@ -1,0 +1,37 @@
+= rabbitamr_cartographer
+
+_Contains config and launch files for mapping with the cartographer algorithm_
+
+_Executable commands :_
+[source, bash]
+
+----
+roslaunch rabbitamr_cartographer rabbitamr_carto.launch
+----
+
+- Used nodes:
+* cartographer_ros
+
+== cartographer_ros
+
+_Cartographer is a system that provides real-time simultaneous localization and mapping (SLAM) in 2D and 3D across multiple platforms and sensor configurations._
+
+== Launch files' description :
+
+=== rabbitamr_carto.launch
+
+[source, xml]
+----
+include::launch/rabbitamr_carto.launch[]
+----
+<1> defines necessary topics as arguments
+<2> runs cartographer_node (submaps)
+<3> cartographer_occupancy_grid_node extracts a map in regular pgm format
+
+image:images/cartographer.png[]
+
+=== Config
+In order to customize amcl a config file is needed:
+
+* link:config/rabbitamr.lua[]
+- params link : https://google-cartographer-ros.readthedocs.io/en/latest/tuning.html

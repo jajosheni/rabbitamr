@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="sensor_camera">
+
+    <xacro:property name="sl_scale" value="1.0"/>
+    <xacro:property name="camera_size_x" value="0.03"/>
+    <xacro:property name="camera_size_y" value="0.1"/>
+    <xacro:property name="camera_size_z" value="0.03"/>
+    <xacro:property name="camera_origin_x" value="-${(base_len/2)}"/>
+    <xacro:property name="camera_origin_y" value="0"/>
+    <xacro:property name="camera_origin_z" value="0.0725"/>
+
+    <xacro:macro name="d435i">
+        <link name="d435i">
+            <visual>
+                <origin xyz="0 0 0" rpy="${radians(90)} 0 ${radians(90)}"/>
+                <geometry>
+                    <mesh filename="package://rabbitamr_description/meshes/accessories/d435i.dae" scale="${sl_scale} ${sl_scale} ${sl_scale}"/>
+                </geometry>
+                <material name="black"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="${camera_size_x} ${camera_size_y} ${camera_size_z}"/>
+                </geometry>
+            </collision>
+            <xacro:box_inertia m="0.1" w="${camera_size_x}" h="${camera_size_y}" d="${camera_size_z}"/>
+        </link>
+
+
+        <joint name="d435i_joint" type="fixed">
+            <origin xyz="${camera_origin_x} ${camera_origin_y} ${camera_origin_z}" rpy="0 0 ${radians(180)}"/>
+            <parent link="base_link"/>
+            <child link="d435i"/>
+        </joint>
+
+    </xacro:macro>
+
+</robot>

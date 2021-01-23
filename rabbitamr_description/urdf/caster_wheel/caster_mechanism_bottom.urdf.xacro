@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="caster__mechanism_bottom">
+    <xacro:property name="cmb_scale" value="0.13"/>
+    <xacro:macro name="caster_mechanism_bottom" params="prefix reflect reflect_x">
+        <link name="${prefix}_mechanism_bottom">
+            <visual>
+                <origin xyz="0 0 0" rpy="${pi} 0 0"/>
+                <geometry>
+                    <mesh filename="package://rabbitamr_description/meshes/caster_wheel/mechanism_top.stl" scale="${cmb_scale} ${cmb_scale} ${cmb_scale}"/>
+                </geometry>
+                <material name="white"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="${pi} 0 0"/>
+                <geometry>
+                    <mesh filename="package://rabbitamr_description/meshes/caster_wheel/mechanism_top.stl" scale="${cmb_scale} ${cmb_scale} ${cmb_scale}"/>
+                </geometry>
+            </collision>
+            <xacro:cylinder_inertia m="1" r="0.03" h="0.04"/>
+        </link>
+
+        <joint name="${prefix}_mechanism_bottom_joint" type="fixed">
+            <parent link="${prefix}_mechanism_top"/>
+            <child link="${prefix}_mechanism_bottom"/>
+            <origin xyz="0 0.015 -0.0312" rpy="0 0 0"/>
+        </joint>
+    </xacro:macro>
+</robot>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>rabbitamr_base</name>
+  <version>0.1.0</version>
+  <description>The rabbitamr_base package</description>
+
+  <maintainer email="shen.i@live.com">Sheni Hamitaj</maintainer>
+  <author email="shen.i@live.com">Sheni Hamitaj</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>controller_manager</build_depend>
+  <build_depend>hardware_interface</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_export_depend>controller_manager</build_export_depend>
+  <build_export_depend>hardware_interface</build_export_depend>
+  <build_export_depend>ros_control</build_export_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>hardware_interface</exec_depend>
+  <exec_depend>roscpp</exec_depend>
+
+  <export>
+
+  </export>
+</package>

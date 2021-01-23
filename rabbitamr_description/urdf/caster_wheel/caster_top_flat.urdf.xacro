@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="caster_top_flat">
+    <xacro:property name="ctf_scale" value="3.90"/>
+    <xacro:macro name="caster_top_flat" params="prefix reflect reflect_x">
+        <link name="${prefix}_top_flat">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://rabbitamr_description/meshes/caster_wheel/top_flat.stl" scale="${ctf_scale} ${ctf_scale} ${ctf_scale}"/>
+                </geometry>
+                <material name="white"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.15 0.15 0.01"/>
+                </geometry>
+            </collision>
+            <xacro:box_inertia m="1" w="0.001" h="0.001" d="0.001"/>
+        </link>
+
+        <joint name="${prefix}_top_flat_joint" type="fixed">
+            <parent link="base_link"/>
+            <child link="${prefix}_top_flat"/>
+            <origin xyz="${caster_wheel_joint_offset * reflect_x} ${(wheel_separation/2 - 0.071) * reflect} 0.003525"
+                    rpy="0 0 0"/>
+        </joint>
+    </xacro:macro>
+</robot>

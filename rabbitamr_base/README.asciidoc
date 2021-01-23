@@ -1,0 +1,105 @@
+= rabbitamr_base
+
+_hardware_interface implementation_
+
+_Executable commands :_
+[source, bash]
+
+----
+roslaunch rabbitamr_base control.launch
+----
+
+- Two nodes have been developed in this package:
+ * rabbitamr_hardware_interface
+ * modbus_con
+
+- Used nodes:
+ * controller_spawner
+
+== rabbitamr_hardware_interface
+
+This node is located at `src/rabbitamr_hardware_interface.cpp`
+
+_Connects to PLC._
+
+_Sends cmd_vel information shared in ROS to PLC as miliVolt._
+
+_Uses data from encoders to calculate odometry._
+
+_Applies speed limits and ramps._
+
+== modbus_con
+
+_Connects to PLC._
+
+_Used by PLC to detect disconnection._
+
+== controller_spawner
+
+_Start the ROS control by adding args such as (joint_states, diff_drive_controller)._
+
+
+== Description of the Launch File :
+
+=== control.launch
+
+[source, xml]
+----
+include::launch/control.launch[]
+----
+
+<1> starts hardware_interface_node, location: `src/rabbitamr_hardware_interface.cpp`.
+<2> Loads params from config file.
+<3> Runs controller_spawner from the controller_manager package that comes with Ros Control.
+<4> Used by PLC to detect disconnection, location: `src/modbus_con.cpp`
+<5> Broadcast the /odometry/filtered topic from the EKF sensor fusion as /odom.
+
+== Source code explanation
+
+=== rabbitamr_hardware_interface.cpp
+
+[source, cpp]
+----
+include::src/rabbitamr_hardware_interface.cpp[lines=4..50]
+----
+
+<1> inherits from hardware_interface::RobotHW
+<2> To start ros Control an object of type controller_manager::ControllerManager
+<3> Async thread
+<4> read method : It takes data from encoders and converts it to joint_state.
+<5> cm.update() : Generates cmd_vel and odom information from data received in each loop.
+<6> write method : Writes the speed information from cmd_vel to PLC in mV format.
+
+=== rabbitamr_hw_node.cpp
+
+[source, cpp]
+----
+include::src/rabbitamr_hw_node.cpp[lines=46..52;90..107;118..180]
+----
+<1> Joint State Interface connection.
+<2> It establishes a connection with the PLC and the first value from the encoders is saved.
+<3> After reading the encoder data calculated joint_state (positions & velocities).
+<4> Converting speed information to mV with custom parameters (milivolt_to_m_per_second, encoder_ticks_per_rotation) in control.yaml to later write to PLC.
+
+=== modbus_con.cpp
+
+[source, cpp]
+----
+include::src/modbus_con.cpp[lines=40..65]
+----
+
+<1> Send one bit to PLC every 100ms (true - false) and read one bit
+
+== CONFIG FILES
+
+**Parameters in the link but not in the config file take the default values.**
+
+- *link:config/control.yaml[control.yaml]*
+ * _diff_drive_controller params_
+ * params link: http://wiki.ros.org/diff_drive_controller
+
+
+- *link:config/localization.yaml[localization.yaml]*
+* _sensor fusion - ekf config params_
+* params link: http://docs.ros.org/melodic/api/robot_localization/html/configuring_robot_localization.html
+

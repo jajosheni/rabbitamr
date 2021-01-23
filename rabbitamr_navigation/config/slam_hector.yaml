@@ -1,0 +1,38 @@
+
+# Frame names 
+map_frame: map
+base_frame: base_footprint
+odom_frame: odom
+
+# Tf use 
+use_tf_scan_transformation: true
+use_tf_pose_start_estimate: false
+pub_map_odom_transform: true
+
+# Map size / start point 
+map_resolution: 0.050
+map_size: 2048
+map_start_x: 0.5
+map_start_y: 0.5
+map_multi_res_levels: 2
+
+# Map update parameters 
+update_factor_free: 0.4
+update_factor_occupied: 0.9
+map_update_distance_thresh: 0.4
+map_update_angle_thresh: 0.06
+laser_z_min_value: -1.0
+laser_z_max_value: 1.0
+
+# Advertising config 
+advertise_map_service: true
+
+scan_subscriber_queue_size: 5
+scan_topic: /sick_safetyscanners/scan
+
+# Debug parameters 
+#
+#output_timing: false
+#pub_drawings: true
+#pub_debug_output: true
+

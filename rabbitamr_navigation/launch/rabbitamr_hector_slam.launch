@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen">
+        <rosparam file="$(find rabbitamr_navigation)/config/slam_hector.yaml" command="load"/>
+    </node>
+
+    <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 map odom 100"/>
+    <!--- Run Rviz -->
+<!--    <include file="$(find rabbitamr_viz)/launch/rabbitamr_mapping.launch" />-->
+</launch>
+

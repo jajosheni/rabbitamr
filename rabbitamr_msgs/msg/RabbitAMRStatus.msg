@@ -1,0 +1,2 @@
+Header header
+int16 battery_state

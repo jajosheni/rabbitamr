@@ -1,0 +1,63 @@
+odom_frame: "odom"
+map_frame: "map"
+base_frame: "base_footprint"
+
+throttle_scans: 1 # Process 1 out of every this many scans (set it to a higher number to skip more scans)
+
+map_update_interval: 5.0 # How long (in seconds) between updates to the map.
+#Lowering this number updates the occupancy grid more often, at the expense of greater computational load.
+
+resolution: 0.05
+delta: 0.05 # Resolution of the map (in metres per occupancy grid block).
+#Same as resolution. Defined for compatibility with the parameter names of gmapping.
+
+transform_publish_period: 0.05 #How long (in seconds) between transform publications.
+
+use_scan_matching: true #When set to true, the mapper will use a scan matching algorithm.
+#In most real-world situations this should be set to true so that the mapper algorithm
+#can correct for noise and errors in odometry and scan data.
+#In some simulator environments where the simulated scan and odometry data are very accurate,
+#the scan matching algorithm can produce worse results. In those cases set this to false to improve results.
+
+minimum_travel_distance: 0.2 #Sets the minimum travel between scans.
+#If a new scan's position is more than minimumTravelDistance from the previous scan,
+#the mapper will use the data from the new scan. Otherwise, it will discard the new scan
+#if it also does not meet the minimum change in heading requirement.
+#For performance reasons, generally it is a good idea to only process scans if the robot
+#has moved a reasonable amount.
+
+minimum_travel_heading: deg2rad(10) # Sets the minimum heading change between scans.
+#If a new scan's heading is more than minimum_travel_heading from the previous scan,
+#the mapper will use the data from the new scan. Otherwise, it will discard the new scan
+#if it also does not meet the minimum travel distance requirement.
+#For performance reasons, generally it is a good idea to only process scans
+#if the robot has moved a reasonable amount.
+
+scan_buffer_size: 70 #Sets the length of the scan chain stored for scan matching. scan_buffer_size should be set to approximately scan_buffer_maximum_scan_distance / minimum_travel_distance. The idea is to get an area approximately 20 meters long for scan matching. For example, if we add scans every minimum_travel_distance == 0.3 meters, then scan_buffer_size should be 20 / 0.3 = 67.
+scan_buffer_maximum_scan_distance: 20.0 #Sets the maximum distance between the first and last scans in the scan chain stored for matching.
+link_match_minimum_response_fine: 0.8 #Scans are linked only if the correlation response value is greater than this value.
+link_scan_maximum_distance: 10.0 #Sets the maximum distance between linked scans. Scans that are farther apart will not be linked regardless of the correlation response value.
+
+loop_search_maximum_distance: 4.0 #Scans less than this distance from the current position will be considered for a match in loop closure.
+do_loop_closing: true # Enable/disable loop closure.
+loop_match_minimum_chain_size: 10 #When the loop closure detection finds a candidate it must be part of a large set of linked scans. If the chain of scans is less than this value, we do not attempt to close the loop.
+loop_match_maximum_variance_coarse: sqrt(0.4) #The co-variance values for a possible loop closure have to be less than this value to consider a viable solution. This applies to the coarse search.
+loop_match_minimum_response_coarse: 0.8 #If response is larger than this, then initiate loop closure search at the coarse resolution.
+loop_match_minimum_response_fine: 0.8 #If response is larger than this, then initiate loop closure search at the fine resolution.
+
+correlation_search_space_dimension: 0.3 # Sets the size of the search grid used by the matcher. The search grid will have the size correlation_search_space_dimension x correlation_search_space_dimension.
+correlation_search_space_resolution: 0.01 # Sets the resolution (size of a grid cell) of the correlation grid.
+correlation_search_space_smear_deviation: 0.03 # The point readings are smeared by this value in X and Y to create a smoother response.
+
+loop_search_space_dimension: 8.0 # The size of the search grid used by the matcher.
+loop_search_space_resolution: 0.05 # The resolution (size of a grid cell) of the correlation grid.
+loop_search_space_smear_deviation: 0.03 # The point readings are smeared by this value in X and Y to create a smoother response.
+
+distance_variance_penalty: sqrt(0.3) # Variance of penalty for deviating from odometry when scan-matching. The penalty is a multiplier (less than 1.0) is a function of the delta of the scan position being tested and the odometric pose.
+angle_variance_penalty: sqrt(deg2rad(20)) # See distance_variance_penalty.
+fine_search_angle_offset: deg2rad(0.2) # The range of angles to search during a fine search.
+coarse_search_angle_offset: deg2rad(20.0) # The range of angles to search during a coarse search.
+coarse_angle_resolution : deg2rad(2.0) # Resolution of angles to search during a coarse search.
+minimum_angle_penalty: 0.9 # Minimum value of the angle penalty multiplier so scores do not become too small.
+minimum_distance_penalty: 0.5 # Minimum value of the distance penalty multiplier so scores do not become too small.
+use_response_expansion: false # Whether to increase the search space if no good matches are initially found

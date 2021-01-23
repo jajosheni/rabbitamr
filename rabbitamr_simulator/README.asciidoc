@@ -1,0 +1,19 @@
+= rabbitamr_simulator
+
+_Shows the robot virtually_
+
+_gazebo_ros_control is used instead of ros_control_
+
+_Executable commands :_
+
+[source, bash]
+----
+roslaunch rabbitamr_simulator gazebo.launch
+----
+
+[source, xml]
+----
+include::launch/gazebo.launch[]
+----
+<1> Runs the robot in the warehouse environment.
+

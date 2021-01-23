@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>rabbitamr_cartographer</name>
+  <version>0.0.0</version>
+  <description>The rabbitamr_cartographer package</description>
+ 
+  <maintainer email="shen.i@live.com">Sheni Hamitaj</maintainer>
+  <author email="shen.i@live.com">Sheni Hamitaj</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>cartographer_ros</build_depend>
+  <build_depend>map_server</build_depend>
+  <build_export_depend>cartographer_ros</build_export_depend>
+  <build_export_depend>map_server</build_export_depend>
+  <exec_depend>cartographer_ros</exec_depend>
+  <exec_depend>map_server</exec_depend>
+
+ 
+  <export> 
+
+  </export>
+</package>

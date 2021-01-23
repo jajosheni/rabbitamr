@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="rabbitamr">
+
+    <xacro:include filename="$(find rabbitamr_description)/urdf/rabbitamr.gazebo.xml"/>
+
+    <xacro:property name="base_width" value="0.7"/>
+    <xacro:property name="base_len" value="1.64"/>
+    <xacro:property name="base_height" value="0.3"/>
+    <xacro:property name="base_distance_from_ground" value="0.021"/>
+
+    <xacro:property name="wheel_radius" value="0.1"/>
+    <xacro:property name="wheel_width" value="0.05"/>
+    <xacro:property name="wheel_separation" value="0.62"/>
+
+    <xacro:property name="caster_wheel_radius" value="0.05"/>
+    <xacro:property name="caster_wheel_width" value="0.05"/>
+    <xacro:property name="caster_wheel_mass" value="0.001"/>
+    <xacro:property name="caster_wheel_joint_offset" value="0.5125"/>
+
+    <!--Color Properties-->
+    <material name="blue">
+        <color rgba="0 0 0.8 1"/>
+    </material>
+    <material name="black">
+        <color rgba="0 0 0 1"/>
+    </material>
+    <material name="white">
+        <color rgba="1 1 1 1"/>
+    </material>
+    <material name="orange">
+        <color rgba="0.5 0.2 0.2 1"/>
+    </material>
+
+    <!--Interial macros-->
+    <xacro:macro name="cylinder_inertia" params="m r h">
+        <inertial>
+            <mass value="${m}"/>
+            <inertia ixx="${m*(3*r*r+h*h)/12}" ixy="0" ixz="0" iyy="${m*(3*r*r+h*h)/12}" iyz="0" izz="${m*r*r/2}"/>
+        </inertial>
+    </xacro:macro>
+
+    <xacro:macro name="box_inertia" params="m w h d">
+        <inertial>
+            <mass value="${m}"/>
+            <inertia ixx="${m / 12.0 * (d*d + h*h)}" ixy="0.0" ixz="0.0" iyy="${m / 12.0 * (w*w + h*h)}" iyz="0.0"
+                     izz="${m / 12.0 * (w*w + d*d)}"/>
+        </inertial>
+    </xacro:macro>
+
+    <!-- Base footprint is on the ground under the robot -->
+    <link name="base_footprint"/>
+
+    <!--Base link-->
+    <link name="base_link">
+        <xacro:box_inertia m="1" w="${base_len}" h="${base_width}" d="${base_height}"/>
+        <visual>
+            <geometry>
+                <mesh filename="package://rabbitamr_description/meshes/body.stl" scale="0.0001 0.0001 0.0001"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://rabbitamr_description/meshes/body.stl" scale="0.0001 0.0001 0.0001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <!--base_link - base_footprint Joint-->
+    <joint name="base_footprint_joint" type="fixed">
+        <origin xyz="0 0 ${base_distance_from_ground + base_height/2}" rpy="0 0 0"/>
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+    </joint>
+
+    <link name="imu_link"/>
+    <joint name="imu_link_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="imu_link"/>
+    </joint>
+
+    <!--Wheel link & joint macro-->
+    <xacro:include filename="$(find rabbitamr_description)/urdf/wheel.urdf.xacro"/>
+
+    <!--Create left and right Wheel links/joints-->
+    <xacro:wheel prefix="left" reflect="1"/>
+    <xacro:wheel prefix="right" reflect="-1"/>
+
+    <!--Import all caster wheel related links/joints-->
+    <xacro:include filename="$(find rabbitamr_description)/urdf/caster_wheel/caster_top_flat.urdf.xacro"/>
+    <xacro:include filename="$(find rabbitamr_description)/urdf/caster_wheel/caster_mechanism_top.urdf.xacro"/>
+    <xacro:include filename="$(find rabbitamr_description)/urdf/caster_wheel/caster_mechanism_bottom.urdf.xacro"/>
+    <xacro:include filename="$(find rabbitamr_description)/urdf/caster_wheel/caster_bottom_flat.urdf.xacro"/>
+    <xacro:include filename="$(find rabbitamr_description)/urdf/caster_wheel/caster_wheel_holder.urdf.xacro"/>
+    <xacro:include filename="$(find rabbitamr_description)/urdf/caster_wheel/caster_wheel.urdf.xacro"/>
+
+    <!--Create 4 Caster Wheel links & joints-->
+    <xacro:macro name="whole_caster_wheel" params="prefix reflect reflect_x">
+        <xacro:caster_top_flat prefix="${prefix}" reflect="${reflect}" reflect_x="${reflect_x}"/>
+        <xacro:caster_mechanism_top prefix="${prefix}" reflect="${reflect}" reflect_x="${reflect_x}"/>
+        <xacro:caster_mechanism_bottom prefix="${prefix}" reflect="${reflect}" reflect_x="${reflect_x}"/>
+        <xacro:caster_bottom_flat prefix="${prefix}" reflect="${reflect}" reflect_x="${reflect_x}"/>
+        <xacro:caster_wheel_holder prefix="${prefix}" reflect="${reflect}" reflect_x="${reflect_x}"/>
+        <xacro:caster_wheel prefix="${prefix}" reflect="${reflect}" reflect_x="${reflect_x}"/>
+    </xacro:macro>
+
+    <xacro:whole_caster_wheel prefix="front_left" reflect="1" reflect_x="1"/>
+    <xacro:whole_caster_wheel prefix="front_right" reflect="-1" reflect_x="1"/>
+    <xacro:whole_caster_wheel prefix="back_left" reflect="1" reflect_x="-1"/>
+    <xacro:whole_caster_wheel prefix="back_right" reflect="-1" reflect_x="-1"/>
+
+    <!-- create & add LIDAR -->
+    <xacro:include filename="$(find rabbitamr_description)/urdf/accessories/sicklidar.urdf.xacro"/>
+    <xacro:sicklidar/>
+
+    <!-- create & add d435i -->
+    <xacro:include filename="$(find rabbitamr_description)/urdf/accessories/d435i.urdf.xacro"/>
+    <xacro:d435i/>
+
+
+</robot>

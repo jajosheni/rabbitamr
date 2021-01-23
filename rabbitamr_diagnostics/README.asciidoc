@@ -1,0 +1,53 @@
+= rabbitamr_diagnostics
+
+_Check the status of the software & hardware components._
+
+
+_Executable commands :_
+[source, bash]
+
+----
+rosrun rabbitamr_diagnostics rabbitamr_diagnostics
+----
+
+- One node has been developed in this package:
+* rabbitamr_diagnostics
+
+- Used nodes:
+* diagnostic_aggregator
+
+== diagnostics_node
+
+_This topic receives the packets from the hardware, compares it with the hardware frequency, calculates the received packet percentage and broadcasts it over the diagnostic topic._
+
+== diagnostic_aggregator
+
+_Collect data from diagnostics_node, classify it and publish it in a separate topic_
+
+_Diagnostic topics:_
+
+image::images/topics.png[]
+
+_Diagnostic aggregator:_
+
+image::images/aggregator.png[]
+
+== Source code explanation :
+
+=== rabbitamr_diagnostics.cpp
+
+[source, cpp]
+----
+include::src/rabbitamr_diagnostics.cpp[lines=13..19;29..31;37..68]
+----
+<1> It generates a message in the type `diagnostic_msgs::DiagnosticStatus` and places the necessary information into it.
+<2> Records how many times the callback function has run
+<3> publishes information on diagnostic topic
+<4> It receives incoming packets every second, compares it with predefined hardware frequency and calculates the received packet percentage.
+
+
+== CONFIG FILES
+
+- *link:config/diagnostics.yaml[diagnostics.yaml]*
+* _diagnostics config params_
+* params link: http://wiki.ros.org/diagnostics/Tutorials/Configuring%20Diagnostic%20Aggregators

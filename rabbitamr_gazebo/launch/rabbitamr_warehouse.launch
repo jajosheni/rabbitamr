@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<launch>
+    <!--Robot Description from URDF-->
+    <param name="robot_description"
+           command="$(find xacro)/xacro $(find rabbitamr_description)/urdf/rabbitamr.urdf.xacro"/>
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(find rabbitamr_gazebo)/worlds/warehouse.world"/>
+        <arg name="debug" value="false"/>
+        <arg name="gui" value="true"/>
+        <arg name="paused" value="false"/>
+        <arg name="headless" value="false"/>
+    </include>
+
+    <!--Gazebo Simulator-->
+    <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
+          args="-urdf -param robot_description -model rabbitamr -x -5.3 -y 9.2 -z 0.3" output="screen"/>
+
+</launch>

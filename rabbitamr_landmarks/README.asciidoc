@@ -1,0 +1,87 @@
+= rabbitamr_landmarks
+
+_Action server to define a landmark_
+
+_Executable commands :_
+
+[source,bash]
+----
+roslaunch rabbitamr_landmarks rabbitamr_landmarks.launch
+rosrun rabbitamr_landmarks set_landmark_client
+----
+
+- Used nodes:
+* set_landmark_server
+* set_landmark_client
+
+== set_landmark_server
+
+_Starts landmark action server_
+
+_Saves the landmark coordinates in a yaml file_
+
+== set_landmark_client
+
+_runs landmark action server_
+
+_starts adding the location of the robot as a landmark_
+
+== Description of the Launch File :
+
+=== rabbitamr_landmarks.launch
+
+[source, xml]
+----
+include::launch/rabbitamr_landmarks.launch[]
+----
+
+<1> Uploads previously saved parameters to ros under `/defined_parameters`.
+<2> Starts set_landmark_server
+
+
+== CONFIG FILES
+
+=== landmarks.yaml
+File saved with Rosdump. If you wish to add stations manually:
+
+* add a new station name at the end of station_names
+* define a new object with the same name
+* This object must contain `category, x, y, w, z` fields.
+
+[source, yaml]
+----
+include::config/landmarks.yaml[]
+----
+
+== Source code explanation
+
+=== set_landmark_server.cpp
+
+[source,cpp]
+----
+include::src/set_landmark_server.cpp[lines=14..112]
+----
+
+<1> LandmarkAction class.
+<2> The path of the `landmarks.yaml` file
+<3> When action is called, this method saves the coordinates to the file and returns back `true`.
+<4> Tries to subscribe to amcl_pose before starting, 29 seconds timeout.
+<5> Since Landmarks are loaded as parameters, we can retrieve them from ros. After correcting they are uploaded to the system as ros params again.
+<6> Save the parameters under `/ define_landmarks` with the rosdump command.
+
+=== set_landmark_client.cpp
+
+[source,cpp]
+----
+include::src/set_landmark_client.cpp[lines=36..258]
+----
+
+<1> LandmarkAction objejt
+<2> MoveBaseAction object
+<3> an infinite loop works to keep the application open. Prints user options from 1 to 6.
+<4> A function to view the menu again
+<5> loadLandmarks ros takes the parameters under `/define_landmarks` in the system and keeps them in a Landmark directory.
+<6> listLandmarks displays all landmarks in a formatted way.
+<7> saveLandmark defines and saves a new landmark by requesting station name and category from user.
+<8> sendAGoal calls the action of the move base and sends the robot to a specific location.
+<9> The loadUnload function receives information from the user and transports it to another landmark.

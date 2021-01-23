@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="sensor_laser">
+
+    <xacro:property name="sl_scale" value="0.0025"/>
+    <xacro:property name="laser_size_x" value="0.1"/>
+    <xacro:property name="laser_size_y" value="0.1"/>
+    <xacro:property name="laser_size_z" value="0.18"/>
+    <xacro:property name="laser_origin_x" value="${(base_len/2 - 0.15) + laser_size_x/2}"/>
+    <xacro:property name="laser_origin_y" value="0"/>
+    <xacro:property name="laser_origin_z" value="${-laser_size_z/4}"/>
+
+    <xacro:macro name="sicklidar">
+        <link name="sicklidar">
+            <visual>
+                <origin xyz="0 0 ${laser_size_z/2 - 0.02}" rpy="${radians(180)} 0 0"/>
+                <geometry>
+                    <mesh filename="package://rabbitamr_description/meshes/accessories/laser_scanner.stl" scale="${sl_scale} ${sl_scale} ${sl_scale}"/>
+                </geometry>
+                <material name="black"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="${radians(180)} 0 0"/>
+                <geometry>
+                    <box size="${laser_size_x} ${laser_size_y} ${laser_size_z}"/>
+                </geometry>
+            </collision>
+            <xacro:box_inertia m="0.2" w="${laser_size_x}" h="${laser_size_y}" d="${laser_size_z}"/>
+        </link>
+
+        <joint name="sicklidar_joint" type="fixed">
+            <origin xyz="${laser_origin_x} ${laser_origin_y} ${laser_origin_z}" rpy="0 0 0"/>
+            <parent link="base_link"/>
+            <child link="sicklidar"/>
+        </joint>
+    </xacro:macro>
+
+</robot>

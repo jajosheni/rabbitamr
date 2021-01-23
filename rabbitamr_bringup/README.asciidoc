@@ -1,0 +1,59 @@
+
+= rabbitamr_bringup
+
+_Start the real robot by `*.launch` files._
+
+
+_Executable commands :_
+[source, bash]
+
+----
+roslaunch rabbitamr_bringup rabbitamr_bringup.launch
+----
+
+- Used nodes:
+* realsense2_camera
+* sick_safetyscanners
+* ros_control
+* diagnostic_aggregator
+* diagnostics_node
+
+== realsense2_camera
+
+_Broadcasts image and imu information from the D435i._
+
+== sick_safetyscanners
+
+_Publishes laser scan information from Sick Lidar._
+
+== ros_control
+
+_Receives the odom information from the hardware interface and at the same time converts the cmd_vel commands to mV that are to be written to the PLC._
+
+== diagnostics_node
+
+_This topic receives the packets from the hardware, compares it with the predefined hardware frequency, calculates the received packet percentage and broadcasts it over the diagnostic topic._
+
+
+== diagnostic_aggregator
+
+_Collect data from diagnostics_node, classify it and publish it in a separate topic_
+
+
+== Launch files' description :
+
+=== rabbitamr_bringup.launch
+
+[source, xml]
+----
+include::launch/rabbitamr_bringup.launch[]
+----
+<1> robot_state_publisher: publishes tf
+<2> joint_state_publisher: publishes joint_states
+<3> launches rs_camera.launch from realsense2_camera
+<4> launches rs_t265.launch from realsense2_camera
+<5> executes sick_scansafetyscanners package
+<6> launches control.launch from rabbitamr_base
+<7> executes diagnostics node, location : `src/rabbitamr_diagnostics.cpp`
+<8> executes diagnostic_aggregator node by loading parameter
+<9> starts rosbridge_server to run the Web Application

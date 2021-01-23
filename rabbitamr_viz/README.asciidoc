@@ -1,0 +1,27 @@
+= rabbitamr_viz
+
+_Displays different information in RVIZ according to different situations_
+
+_Executable commands :_
+
+[source, bash] 
+----
+roslaunch rabbitamr_viz rabbitamr_amcl.launch
+roslaunch rabbitamr_viz rabbitamr_mapping.launch
+roslaunch rabbitamr_viz rabbitamr_rviz.launch
+----
+
+- Used nodes:
+* rviz
+
+== rviz
+
+_two- and three-dimensional imaging tool for ROS_
+
+[source, xml]
+----
+include::launch/rabbitamr_amcl.launch[]
+----
+<1> Starts the rviz node and loads a previously created rviz file as argument;
+*_example_*: When we move the robot on the map, it is necessary to display information such as map, robot body and laser scan.
+ These are also saved in the .rviz extension file we use.

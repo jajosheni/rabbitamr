@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <!--Robot Description from URDF-->
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find rabbitamr_description)/urdf/rabbitamr.urdf.xacro"/>
+
+    <node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find rabbitamr_viz)/rviz/mapping.rviz"/>
+
+</launch>

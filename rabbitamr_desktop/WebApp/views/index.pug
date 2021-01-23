@@ -1,0 +1,39 @@
+doctype html
+html(lang=en)
+  head
+    meta(charset='UTF-8')
+    title= title
+    meta(name='viewport' , content="width=device-width, initial-scale=1.0")
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    header
+      div(class="subtitle")
+        span(class="subspan") RabbitAMR WebApp
+
+    main
+      div(class="mapContainer")
+        div(class="map")
+          canvas(id="map_canvas")
+      div(class="controls")
+        div(class="btn forward") FORWARD
+        div(class="btn left") LEFT
+        div(class="btn stop") STOP
+        div(class="btn right") RIGHT
+        div(class="btn backwards") BACKWARDS
+      div(class="slidecontainer")
+        div(class="sliderow")
+          span(class="velocity lin") Absolute Linear Vel : 0.25
+          input(type="range", min="0", max="100", value="50", class="slider", id="linearRange")
+        div(class="sliderow")
+          span(class="velocity ang") Absolute Angular Vel: 0.5
+          input(type="range", min="0", max="100", value="50", class="slider", id="angularRange")
+      div(class="odom")
+        div(class="info odometry") Odom Position:
+        div(class="info x") x:
+        div(class="info y") y:
+      div(class="btn coord") Save Position
+    footer
+      span Birfen Elektrik © 2020
+
+    script(src="https://code.jquery.com/jquery-3.4.1.min.js", integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=", crossorigin="anonymous")
+    script(src="/javascripts/script.js" type="text/javascript")

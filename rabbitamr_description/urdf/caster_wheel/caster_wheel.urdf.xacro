@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="caster_wheel">
+    <xacro:property name="cw_scale" value="0.1014"/>
+    <xacro:macro name="caster_wheel" params="prefix reflect reflect_x">
+        <link name="${prefix}_caster_wheel">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://rabbitamr_description/meshes/caster_wheel/caster_wheel.stl" scale="${cw_scale} ${cw_scale} ${cw_scale}"/>
+                </geometry>
+                <material name="orange"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="${radians(90)} 0 0"/>
+                <geometry>
+                    <cylinder radius="0.05" length="0.03"/>
+                </geometry>
+            </collision>
+            <xacro:cylinder_inertia m="1" r="0.03" h="0.04"/>
+        </link>
+
+        <joint name="${prefix}_caster_wheel_joint" type="continuous">
+            <axis xyz="0 1 0" rpy="0 0 0"/>
+            <parent link="${prefix}_wheel_holder"/>
+            <child link="${prefix}_caster_wheel"/>
+            <origin xyz="0.0195 0 -0.044525" rpy="0 0 0"/>
+        </joint>
+    </xacro:macro>
+
+</robot>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+    <include file="$(find rabbitamr_gazebo)/launch/rabbitamr_model_a.launch"/> <!--1-->
+
+    <rosparam file="$(find rabbitamr_control)/config/control.yaml" command="load"/>
+
+    <!-- load the controllers --> <!--2-->
+    <node name="rabbitamr_controller_manager" pkg="controller_manager" type="spawner"
+          respawn="false" output="screen" args="rabbitamr_joint_state_controller rabbitamr_diff_drive_controller"/>
+
+    <!-- Start EKF for localization -->
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
+        <rosparam command="load" file="$(find rabbitamr_control)/config/localization.yaml"/>
+        <remap from="/odometry/filtered" to="odom"/>
+    </node> <!--3-->
+
+    <!--- Depth image to laser scan -->
+    <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan">
+        <param name="scan_height" value="3"/>
+        <param name="output_frame_id" value="d435i"/>
+        <remap from="image" to="/camera/depth/image_raw"/>
+    </node>
+
+    <!-- start rosbridge --> <!--4-->
+    <include file="$(find rabbitamr_control)/launch/rosbridge.launch"/>
+
+</launch>

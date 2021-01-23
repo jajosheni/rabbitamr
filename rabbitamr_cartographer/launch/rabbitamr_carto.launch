@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!--1-->
+    <arg name="scan_topic" default="/sick_safetyscanners/scan"/>
+    <arg name="odom_topic" default="/rabbitamr_diff_drive_controller/odom"/>
+    <arg name="imu_topic" default="imu/data"/>
+
+    <!-- Run Cartographer Node -->     <!--2-->
+    <node name="cartographer_node" pkg="cartographer_ros"
+          type="cartographer_node" args="
+          -configuration_directory
+              $(find rabbitamr_cartographer)/config
+          -configuration_basename rabbitamr.lua"
+          output="screen">
+
+        <remap from="scan" to="$(arg scan_topic)"/>
+<!--        <remap from="imu" to="$(arg imu_topic)" />-->
+<!--        <remap from="odom" to="$(arg odom_topic)" />-->
+    </node>
+
+    <!--3-->
+    <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros"
+          type="cartographer_occupancy_grid_node" args="-resolution 0.05" />
+
+    <!--- Run Move Base -->
+    <include file="$(find rabbitamr_navigation)/launch/rabbitamr_move_base.launch"/>
+
+</launch>

@@ -1,0 +1,25 @@
+odom_frame: odom
+map_frame: map
+base_frame : base_footprint
+
+
+# Update frequencies
+linearUpdate : 0.5
+angularUpdate : 0.4
+temporalUpdate : 2.0
+resampleThreshold : 0.5
+particles : 80
+
+
+# Initial Map Size
+delta : 0.05
+xmin : -2.5
+xmax : 2.5
+ymin : -2.5
+ymax : 2.5
+
+#
+#map_update_interval: 0.1 # Publish new map
+
+maxUrange: 19.0 # Should be just less than sensor range
+maxRange: 21.0 # Should be just greater than sensor range

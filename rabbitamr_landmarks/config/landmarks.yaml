@@ -1,0 +1,9 @@
+charge1: {category: charge, w: 1.0, x: 0.0127655, y: -0.00185759, z: 0.0}
+load1: {category: load, w: 0.99992, x: 0.503739, y: 8.75978, z: 0.0126395}
+load2: {category: load, w: 0.999945, x: 1.07321, y: 7.47864, z: -0.0105213}
+load3: {category: load, w: 0.999986, x: 0.932971, y: 6.07979, z: -0.00532568}
+load4: {category: load, w: 0.999614, x: 0.910595, y: 4.64971, z: -0.0277997}
+station_names: charge1 load1 load2 load3 load4 unload1 unload2 unload3
+unload1: {category: unload, w: 0.999984, x: 6.62005, y: 0.62882, z: -0.00572794}
+unload2: {category: unload, w: 0.999332, x: 6.55173, y: -0.732648, z: 0.0365481}
+unload3: {category: unload, w: 0.999977, x: 6.49253, y: -2.0546, z: 0.0068295}

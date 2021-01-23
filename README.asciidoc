@@ -1,0 +1,64 @@
+= RabbitAMR
+
+_Packages' description :_
+
+- *link:rabbitamr_base/README.asciidoc[rabbitamr_base]*
+    * _hardware_interface implementation._
+- *link:rabbitamr_bringup/README.asciidoc[rabbitamr_bringup]*
+    * _Start the real robot by `*.launch` files._
+- *link:rabbitamr_diagnostics/README.asciidoc[rabbitamr_diagnostics]*
+    * _Check the status of the software & hardware components._
+- *link:rabbitamr_control/READMpE.asciidoc[rabbitamr_control]*
+    * _Rosbridge connection_
+    * _Differential drive simulation_
+    * _Customized teleop_
+- *link:rabbitamr_description/README.asciidoc[rabbitamr_description]*
+    * _Robot's urdf design_
+- *link:rabbitamr_desktop/README.asciidoc[rabbitamr_desktop]*
+    * _Connect with Rosbridge and launch the website server, this way it's possible to connect with the robot from any device._
+- *link:rabbitamr_gazebo/README.asciidoc[rabbitamr_gazebo]*
+    * _Different worlds_
+    * _Start the robot in gazebo_
+- *link:rabbitamr_landmarks/README.asciidoc[rabbitamr_landmarks]*
+    * _Action server to define a landmark._
+- *link:rabbitamr_msgs/README.asciidoc[rabbitamr_msgs]*
+    * _Special msg files_
+- *link:rabbitamr_navigation/README.asciidoc[rabbitamr_navigation]*
+    * _Contains map, config and launch files to run navigation algorithms_
+- *link:rabbitamr_cartographer/README.asciidoc[rabbitamr_cartographer]*
+    * _Contains config and launch files for mapping with the cartographer algorithm_
+- *link:rabbitamr_robot/README.asciidoc[rabbitamr_robot]*
+    * _template_
+- *link:rabbitamr_simulator/README.asciidoc[rabbitamr_simulator]*
+    * _Shows the robot virtually_
+    * _gazebo_ros_control is used instead of ros_control._
+- *link:rabbitamr_test/README.asciidoc[rabbitamr_test]*
+    * _temporary different test packages_
+- *link:rabbitamr_viz/README.asciidoc[rabbitamr_viz]*
+    * _Displaying different information in RVIZ according to different situations_
+
+== For a quick simulation run :
+
+[source, bash]
+----
+roslaunch rabbitamr_control spawn.launch
+roslaunch rabbitamr_control teleop.launch
+----
+
+=== To add AWS factory on gazebo:
+
+- Create a new file under ~catkin_ws/ called `.rosinstall`
+- Paste in the following :
+
+[source, bash]
+----
+- git: {local-name: src/aws-robomaker-small-warehouse-world, uri: 'https://github.com/aws-robotics/aws-robomaker-small-warehouse-world.git', version: master}
+----
+
+- Install by running :
+
+[source, bash]
+----
+rosws update
+rosdep install --from-paths . --ignore-src -r -y
+----

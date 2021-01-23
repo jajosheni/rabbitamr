@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <arg name="scan_topic" default="/sick_safetyscanners/scan"/>
+    <arg name="odom_topic" default="/rabbitamr_diff_drive_controller/odom"/>
+
+    <!-- Map server -->
+    <arg name="map_file" default="$(find rabbitamr_navigation)/maps/model_a.yaml"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
+    <!-- Localization -->
+    <node pkg="amcl" type="amcl" name="amcl" output="screen">
+        <rosparam file="$(find rabbitamr_navigation)/config/amcl.yaml"/>
+        <remap from="scan" to="$(arg scan_topic)"/>
+        <remap from="odom" to="$(arg odom_topic)" />
+    </node>
+
+    <!--- Run Move Base -->
+    <include file="$(find rabbitamr_navigation)/launch/rabbitamr_move_base.launch" >
+        <arg name="odom_topic" value="$(arg odom_topic)"/>
+    </include>
+
+
+    <!--- Run Rviz -->
+    <include file="$(find rabbitamr_viz)/launch/rabbitamr_amcl.launch" />
+
+</launch>

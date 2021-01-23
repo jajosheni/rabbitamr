@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+    <!--Robot Description from URDF-->
+    <param name="robot_description"
+           command="$(find xacro)/xacro $(find rabbitamr_description)/urdf/rabbitamr.urdf.xacro"/>
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/> <!--1-->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/> <!--2-->
+
+    <!-- start d435i realsense
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+        <arg name="camera" value="d435i"/>
+        <arg name="enable_fisheye" value="false"/>
+        <arg name="enable_depth" value="true"/>
+        <arg name="enable_infra1" value="false"/>
+        <arg name="enable_infra2" value="false"/>
+        <arg name="enable_color" value="false"/>
+        <arg name="enable_gyro" value="false"/>
+        <arg name="enable_accel" value="false"/>
+        <arg name="enable_pointcloud" value="false"/>
+        <arg name="enable_sync" value="false"/>
+        <arg name="align_depth" value="false"/>
+        <arg name="publish_odom_tf" value="true"/>
+        <arg name="depth_fps" value="15"/>
+    </include>-->
+
+    <!--    <node pkg="tf" type="static_transform_publisher" name="d435i_to_d435i_link"-->
+    <!--          args="0 0 0 0 0 0 d435i d435i_link 0.1"/>-->
+
+<!--    <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan" >-->
+<!--        <param name="scan_height" value="3"/>-->
+<!--        <param name="output_frame_id" value="d435i"/>-->
+<!--        <remap from="image" to="/d435i/depth/image_rect_raw" />-->
+<!--    </node>-->
+    <!--3-->
+
+    <!-- start t265 realsense
+    <include file="$(find realsense2_camera)/launch/rs_t265.launch">
+        <arg name="camera" value="t265"/>
+        <arg name="unite_imu_method" value="linear_interpolation"/>
+        <arg name="enable_sync" value="true"/>
+        <arg name="publish_odom_tf" value="false"/>
+    </include>
+
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_t265_link"
+          args="0.82 0 0.0725 0 0 0 base_link t265_link 100"/> --> <!--4-->
+
+    <!-- start laser scan -->
+    <include file="$(find sick_safetyscanners)/launch/sick_safetyscanners.launch"> <!--5-->
+        <arg name="sensor_ip" value="192.168.4.10"/>
+        <arg name="host_ip" value="192.168.4.201"/>
+        <arg name="frame_id" value="sicklidar"/>
+        <arg name="angle_start" value="-1.82"/>
+        <arg name="angle_end" value="1.82"/>
+    </include>
+
+    <!-- start real robot controller -->
+    <include file="$(find rabbitamr_base)/launch/control.launch"/> <!--6-->
+
+    <!-- diagnostics -->
+    <node pkg="rabbitamr_bringup" type="diagnostics_node" name="diagnostics_node" output="screen"/> <!--7-->
+
+    <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator"> <!--8-->
+        <rosparam command="load" file="$(find rabbitamr_diagnostics)/config/diagnostics.yaml"/>
+    </node>
+
+    <!-- start rosbridge --> <!--9-->
+    <include file="$(find rabbitamr_control)/launch/rosbridge.launch"/>
+
+</launch>

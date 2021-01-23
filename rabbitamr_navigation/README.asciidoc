@@ -1,0 +1,151 @@
+= rabbitamr_navigation
+
+_Contains map, config and launch files to run navigation algorithms_
+
+_Executable commands :_
+[source, bash] 
+----
+roslaunch rabbitamr_navigation rabbitamr_amcl.launch
+roslaunch rabbitamr_navigation rabbitamr_karto.launch
+roslaunch rabbitamr_navigation rabbitamr_gmapping.launch
+roslaunch rabbitamr_navigation rabbitamr_hector.launch
+----
+
+- Used nodes:
+  * amcl
+  * move_base
+  * slam_gmapping
+  * slam_karto
+  * hector_slam
+
+== amcl
+_amcl is a probabilistic localization system for a robot moving in 2D._
+_It implements the adaptive (or KLD-sampling) Monte Carlo localization approach which uses a particle filter to track the pose of a robot against a known map._
+
+=== Tutorial
+After starting simulation or real robot run the following commands on separate terminals:
+
+[source, bash]
+----
+# start amcl node
+roslaunch rabbitamr_navigation rabbitamr_amcl.launch
+
+# to visualize the robot in rviz
+roslaunch rabbitamr_viz rabbitamr_amcl.launch
+----
+
+image:images/amcl.png[]
+
+=== Config
+In order to customize amcl a config file is needed:
+
+* link:config/amcl.yaml[]
+
+== move_base
+_The move_base package provides an implementation of an action that,_
+_given a goal in the world, will attempt to reach it with a mobile base._
+_The move_base node links together a global and local planner to accomplish its global navigation task._
+
+
+=== Config
+In order to customize move_base several config files are needed:
+
+* link:config/move_base.yaml[]
+  - params link : http://wiki.ros.org/move_base
+* link:config/costmap_common.yaml[]
+  - params link : http://wiki.ros.org/costmap_2d
+* link:config/costmap_local.yaml[]
+  - params link : http://wiki.ros.org/costmap_2d
+* link:config/costmap_global.yaml[]
+  - params link : http://wiki.ros.org/costmap_2d
+* link:config/planner_dwa.yaml[]
+  - params link : http://wiki.ros.org/dwa_local_planner
+* link:config/planner_navfn.yaml[]
+  - params link : http://wiki.ros.org/navfn
+* link:config/planner_global.yaml[]
+  - params link : http://wiki.ros.org/global_planner
+* link:config/planner_trajectory.yaml[]
+  - params link : http://wiki.ros.org/base_local_planner
+* link:config/planner_teb.yaml[]
+  - params link : http://wiki.ros.org/global_planner
+
+
+== slam_gmapping
+_A highly efficient particle filer to learn grid maps from laser range data._
+
+=== Tutorial
+After starting simulation or real robot run the following commands on separate terminals:
+
+[source, bash]
+----
+# start slam gmapping
+roslaunch rabbitamr_navigation rabbitamr_gmapping.launch
+
+# to visualize the map in rviz
+roslaunch rabbitamr_viz rabbitamr_mapping.launch
+
+# to control the robot
+roslaunch rabbitamr_control teleop.launch
+
+# to save the map
+rosrun map_server map_saver -f path/to/file
+----
+
+image:images/gmapping.png[]
+
+=== Config
+In order to customize gmapping a config file is needed:
+
+* link:config/slam_gmapping.yaml[]
+
+== slam_karto
+_A highly efficient particle filer to learn grid maps from laser range data._
+
+=== Tutorial
+After starting simulation or real robot run the following commands on separate terminals:
+
+[source, bash]
+----
+# start slam karto node
+roslaunch rabbitamr_navigation rabbitamr_karto.launch
+
+# to visualize the map in rviz
+roslaunch rabbitamr_viz rabbitamr_mapping.launch
+
+# to control the robot
+roslaunch rabbitamr_control teleop.launch
+
+# to save the map
+rosrun map_server map_saver -f path/to/file
+----
+
+=== Config
+In order to customize gmapping a config file is needed:
+
+* link:config/slam_karto.yaml[]
+
+== slam_hector
+_A highly efficient particle filer to learn grid maps from laser range data._
+
+=== Tutorial
+After starting simulation or real robot run the following commands on separate terminals:
+
+[source, bash]
+----
+# start karto node
+roslaunch rabbitamr_navigation rabbitamr_hector.launch
+
+# to visualize the map in rviz
+roslaunch rabbitamr_viz rabbitamr_mapping.launch
+
+# to control the robot
+roslaunch rabbitamr_control teleop.launch
+
+# to save the map
+rosrun map_server map_saver -f path/to/file
+----
+
+=== Config
+In order to customize gmapping a config file is needed:
+
+* link:config/slam_hector.yaml[]

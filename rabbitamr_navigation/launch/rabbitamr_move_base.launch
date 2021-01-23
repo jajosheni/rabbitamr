@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="odom_topic" default="/rabbitamr_diff_drive_controller/odom"/>
+
+    <arg name="base_global_planner" default="navfn/NavfnROS"/>
+    <!--    <arg name="base_global_planner" default="SBPLLatticePlanner"/>-->
+    <!--    <arg name="base_global_planner" default="nav_core_adapter::GlobalPlannerAdapter"/>-->
+    <!--    <arg name="base_global_planner" default="global_planner/GlobalPlanner"/>-->
+    <arg name="base_local_planner" default="dwa_local_planner/DWAPlannerROS"/>
+    <!--    <arg name="base_local_planner" default="nav_core_adapter::LocalPlannerAdapter"/>-->
+    <!--    <arg name="base_local_planner" default="base_local_planner/TrajectoryPlannerROS"/>-->
+    <!--    <arg name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />-->
+
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+
+        <param name="base_global_planner" value="$(arg base_global_planner)"/>
+        <param name="base_local_planner" value="$(arg base_local_planner)"/>
+
+        <!-- observation sources located in costmap_common.yaml -->
+        <rosparam file="$(find rabbitamr_navigation)/config/costmap_common.yaml" command="load" ns="global_costmap"/>
+        <rosparam file="$(find rabbitamr_navigation)/config/costmap_common.yaml" command="load" ns="local_costmap"/>
+
+        <rosparam file="$(find rabbitamr_navigation)/config/costmap_local.yaml" command="load"/>
+        <rosparam file="$(find rabbitamr_navigation)/config/costmap_global.yaml" command="load"/>
+        <rosparam file="$(find rabbitamr_navigation)/config/move_base.yaml" command="load"/>
+
+        <!--        <rosparam file="$(find rabbitamr_navigation)/config/planner_trajectory.yaml" command="load"/>-->
+        <rosparam file="$(find rabbitamr_navigation)/config/planner_dwa.yaml" command="load"/>
+        <!--        <rosparam file="$(find rabbitamr_navigation)/config/planner_dwb.yaml" command="load"/>-->
+        <!--        <rosparam file="$(find rabbitamr_navigation)/config/planner_global.yaml" command="load"/>-->
+        <!--        <rosparam file="$(find rabbitamr_navigation)/config/planner_dlux_global.yaml" command="load"/>-->
+        <rosparam file="$(find rabbitamr_navigation)/config/planner_navfn.yaml" command="load"/>
+        <!--        <rosparam file="$(find rabbitamr_navigation)/config/planner_sbpl.yaml" command="load"/>-->
+        <!--        <param name="SBPLLatticePlanner/primitive_filename" value="$(find rabbitamr_navigation)/config/rabbitamr.mprim"/>-->
+        <!--        <rosparam file="$(find rabbitamr_navigation)/config/planner_teb.yaml" command="load"/>-->
+
+        <remap from="cmd_vel" to="rabbitamr_diff_drive_controller/cmd_vel"/>
+        <remap from="odom" to="$(arg odom_topic)" />
+
+    </node>
+
+</launch>

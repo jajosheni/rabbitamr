@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+    <!--Robot Description from URDF-->
+    <param name="robot_description"
+           command="$(find xacro)/xacro $(find rabbitamr_description)/urdf/rabbitamr.urdf.xacro"/>
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+
+    <!-- start t265 realsense --> <!--4-->
+    <include file="$(find realsense2_camera)/launch/rs_t265.launch">
+        <arg name="camera" value="t265"/>
+        <arg name="unite_imu_method" value="linear_interpolation"/>
+        <arg name="enable_sync" value="true"/>
+        <arg name="publish_odom_tf" value="false"/>
+    </include>
+
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_t265_link"
+          args="0.82 0 0.0725 0 0 0 base_link t265_link 100"/>
+
+    <!-- start laser scan -->
+    <include file="$(find sick_safetyscanners)/launch/sick_safetyscanners.launch">
+        <arg name="sensor_ip" value="192.168.4.10"/>
+        <arg name="host_ip" value="192.168.4.201"/>
+        <arg name="frame_id" value="sicklidar"/>
+        <arg name="angle_start" value="-1.82"/>
+        <arg name="angle_end" value="1.82"/>
+    </include>
+
+    <!-- start real robot controller -->
+
+    <node name="rabbitamr" pkg="rabbitamr_base" type="rabbitamr_hardware_interface" respawn="false"
+          output="screen" required="true"/>
+
+    <rosparam file="$(find rabbitamr_test)/config/control.yaml" command="load"/>
+
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+          output="screen" args="rabbitamr_joint_state_controller rabbitamr_diff_drive_controller" required="true"/>
+
+    <node name="modbus_con" pkg="rabbitamr_base" type="modbus_con" respawn="false"
+          output="screen" required="true"/>
+
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
+        <rosparam command="load" file="$(find rabbitamr_test)/config/localization.yaml" />
+        <remap from="/odometry/filtered" to="odom"/> <!--5-->
+    </node>
+
+</launch>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<launch>
+    <rosparam file="$(find rabbitamr_landmarks)/config/landmarks.yaml" command="load" ns="/defined_landmarks"/> <!--1-->
+    <node pkg="rabbitamr_landmarks" type="set_landmark_server" name="set_landmark_server"/> <!--2-->
+</launch>

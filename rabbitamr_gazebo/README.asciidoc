@@ -1,0 +1,72 @@
+= rabbitamr_gazebo
+
+_Contains different designed worlds and shows the robot in these worlds_
+
+**Virtual Worlds:**
+
+* Empty World
+[source, bash]
+----
+roslaunch rabbitamr_gazebo rabbitamr_empty_world.launch
+----
+
+image:images/empty_world.png[]
+
+* World 1
+[source, bash]
+----
+roslaunch rabbitamr_gazebo rabbitamr_world1.launch
+----
+
+image:images/world1.png[]
+
+* World 2
+[source, bash]
+----
+roslaunch rabbitamr_gazebo rabbitamr_world2.launch
+----
+
+image:images/world2.png[]
+
+* World 3
+[source, bash]
+----
+roslaunch rabbitamr_gazebo rabbitamr_world3.launch
+----
+
+image:images/world3.png[]
+
+
+* World 4
+[source, bash]
+----
+roslaunch rabbitamr_gazebo rabbitamr_world4.launch
+----
+
+image:images/world4.png[]
+
+
+* Warehouse
+[source, bash]
+----
+roslaunch rabbitamr_gazebo rabbitamr_warehouse.launch
+----
+
+image:images/warehouse.png[]
+
+- Used nodes:
+* robot_state_publisher
+* joint_state_publisher
+* gazebo
+
+== robot_state_publisher
+
+_tf publisher_
+
+== joint_state_publisher
+
+_joint_state publisher_
+
+== gazebo
+
+_runs the robot in a virtual environment_

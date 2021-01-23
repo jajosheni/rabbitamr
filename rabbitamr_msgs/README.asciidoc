@@ -1,0 +1,11 @@
+= rabbitamr_msgs
+
+_Special msg files_
+
+Message File: RabbitAMRStatus.msg
+
+[source, ruby]
+----
+Header header
+int16 battery_state
+----

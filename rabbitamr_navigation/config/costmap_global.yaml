@@ -1,0 +1,16 @@
+global_costmap:
+  rolling_window: false
+  track_unknown_space: false
+  global_frame: map
+
+#  robot_radius: 0.83
+  footprint: [[-0.85, -0.4], [-0.85, 0.4], [0.85, 0.4], [0.85, -0.4]]
+
+  inflation_layer:
+    inflation_radius: 1.62
+    cost_scaling_factor: 2.58
+
+  plugins:
+    - {name: static_layer,    type: "costmap_2d::StaticLayer"}
+    - {name: obstacles_layer, type: "costmap_2d::ObstacleLayer"}
+    - {name: inflation_layer, type: "costmap_2d::InflationLayer"}

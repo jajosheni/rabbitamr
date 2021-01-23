@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>rabbitamr_robot</name>
+  <version>0.1.0</version>
+  <description>The rabbitamr_robot package</description>
+
+  <maintainer email="shen.i@live.com">Sheni Hamitaj</maintainer>
+  <author email="shen.i@live.com">Sheni Hamitaj</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <exec_depend>std_msgs</exec_depend>
+
+
+  <export>
+
+  </export>
+</package>

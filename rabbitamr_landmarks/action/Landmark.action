@@ -1,0 +1,12 @@
+# This is an action definition file, which has three parts: the goal
+# the result, and the feedback.
+
+# Part 1: the goal.
+string station_name
+string category
+---
+# Part 2: the result, sent by action server upon completion
+bool saved_landmark
+---
+# Part 3: the feedback,to be sent periodically by server
+duration time_elapsed
