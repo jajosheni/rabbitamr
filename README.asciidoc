@@ -8,7 +8,7 @@ _Packages' description :_
     * _Start the real robot by `*.launch` files._
 - *link:rabbitamr_diagnostics/README.asciidoc[rabbitamr_diagnostics]*
     * _Check the status of the software & hardware components._
-- *link:rabbitamr_control/READMpE.asciidoc[rabbitamr_control]*
+- *link:rabbitamr_control/README.asciidoc[rabbitamr_control]*
     * _Rosbridge connection_
     * _Differential drive simulation_
     * _Customized teleop_
