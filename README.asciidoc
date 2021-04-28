@@ -1,5 +1,14 @@
 = RabbitAMR
 
+
+== For a quick simulation run :
+
+[source, bash]
+----
+roslaunch rabbitamr_control spawn.launch
+roslaunch rabbitamr_control teleop.launch
+----
+
 _Packages' description :_
 
 - *link:rabbitamr_base/README.asciidoc[rabbitamr_base]*
@@ -36,14 +45,6 @@ _Packages' description :_
     * _temporary different test packages_
 - *link:rabbitamr_viz/README.asciidoc[rabbitamr_viz]*
     * _Displaying different information in RVIZ according to different situations_
-
-== For a quick simulation run :
-
-[source, bash]
-----
-roslaunch rabbitamr_control spawn.launch
-roslaunch rabbitamr_control teleop.launch
-----
 
 === To add AWS factory on gazebo:
 
