@@ -28,6 +28,7 @@
   <exec_depend>std_msgs</exec_depend>
 
 
+  <license>Unlicense</license>
   <export>
 
   </export>

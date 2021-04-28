@@ -16,6 +16,7 @@
   <exec_depend>map_server</exec_depend>
 
  
+  <license>Unlicense</license>
   <export> 
 
   </export>
