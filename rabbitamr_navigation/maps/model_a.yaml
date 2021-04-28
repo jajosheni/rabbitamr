@@ -1,4 +1,4 @@
-image: /home/melodic/catkin_ws/src/rabbitamr/rabbitamr_navigation/maps/model_a.pgm
+image: ./model_a.pgm
 resolution: 0.050000
 origin: [-2.500000, -13.700000, 0.000000]
 negate: 0
