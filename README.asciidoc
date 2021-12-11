@@ -37,7 +37,7 @@ _Packages' description :_
 - *link:rabbitamr_cartographer/README.asciidoc[rabbitamr_cartographer]*
     * _Contains config and launch files for mapping with the cartographer algorithm_
 - *link:rabbitamr_robot/README.asciidoc[rabbitamr_robot]*
-    * _template_
+    * _empty_
 - *link:rabbitamr_simulator/README.asciidoc[rabbitamr_simulator]*
     * _Shows the robot virtually_
     * _gazebo_ros_control is used instead of ros_control._
